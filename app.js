@@ -5,10 +5,12 @@ const path = require('path');
 
 const PORT = 8000;
 
+// add static file
 app.use(express.static('static'))
 // default options
 app.use(fileUpload());
 
+// handle json data
 const bodyParser = require('body-parser')
 app.use(bodyParser.json());
 app.use('/uploads',express.static('uploads'))
@@ -18,6 +20,7 @@ app.post('/upload/content', function(req, res) {
   res.send(req.body)
 })
 
+// handle static file
 app.post('/upload', function(req, res) {
   let sampleFile;
   let uploadPath;
