@@ -4,6 +4,7 @@ const app = express();
 const path = require('path');
 
 const PORT = 8000;
+const IMG_DIR = 'uploads'
 
 // add static file
 app.use(express.static('static'))
@@ -13,7 +14,7 @@ app.use(fileUpload());
 // handle json data
 const bodyParser = require('body-parser')
 app.use(bodyParser.json());
-app.use('/uploads',express.static('uploads'))
+app.use('/uploads',express.static(IMG_DIR))
 
 app.post('/upload/content', function(req, res) {
   console.log(req.body)
@@ -38,14 +39,14 @@ app.post('/upload', function(req, res) {
   // 为文件名打一个时间戳，保证不重名
   const filename = (new Date().getTime()) + sampleFile.name;
 
-  uploadPath = path.join(__dirname, 'uploads', filename);
+  uploadPath = path.join(__dirname, IMG_DIR, filename);
 
   sampleFile.mv(uploadPath, function(err) {
     if (err) {
       return res.status(500).send(err);
     }
 
-  res.send({default: path.join('uploads', filename)})
+  res.send({default: path.join(IMG_DIR, filename)})
   });
 });
 
